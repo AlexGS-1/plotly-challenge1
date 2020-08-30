@@ -5,11 +5,14 @@ init();
 function init(){
     
     var selector_space = d3.select("#selDataset");
-
+    var selector_panel = d3.select("#sample-metadata");
 
     d3.json("samples.json").then((content)=>{
 
+        var sample_samples = content.samples;
+        var meta_samples = content.metadata;
         var names_samples = content.names;
+
         names_samples.forEach((entry)=>{
         selector_space.append("option").text(entry).property("value",entry);
 
@@ -32,10 +35,8 @@ function Changed(newSample) {
 //Metadata
 
 function Metadata(sample_to_read){
-    var selector_panel = d3.select("#sample-metadata");
+    
 
-    d3.json("samples.json").then((content)=>{
-        var meta_samples = content.metadata;
         var Meta_filtered = meta_samples.filter(data_point => data_point.id == sample_to_read);
         var Meta_filtered_out = Meta_filtered[0];
 
@@ -46,16 +47,13 @@ function Metadata(sample_to_read){
 
         });
 
-     });
 }
 
 //Charts
 
 function Charts(sample_to_read){
 
-    d3.json("samples.json").then((content)=>{
-        
-        var sample_samples = content.samples;
+    
         var samples_filtered = sample_samples.filter(data_point => data_point.id == sample_to_read);
         var samples_filtered_out = samples_filtered[0];
 
@@ -109,7 +107,7 @@ function Charts(sample_to_read){
 
         Plotly.newPlot("bubble", BubbleChartData, BubbleLayout);
       
-    });
+    
     
     
 
